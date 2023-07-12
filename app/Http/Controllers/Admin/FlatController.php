@@ -51,24 +51,33 @@ class FlatController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Flat $flat)
     {
-        //
+        return view('admin.flat.edit', compact('flat'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(FlatCreateRequest $request, Flat $flat)
     {
-        //
+        $flat->update($request->validated());
+
+        return to_route('admin.flat.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Flat $flat)
     {
-        //
+        try{
+        $flat->delete();
+
+        return response()->json(['status' => 'success']);
+
+        }catch(\Exception $e) {
+            throw $e;
+        }
     }
 }
