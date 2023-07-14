@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\DataTables\FlatBillingDataTable;
 use App\Http\Controllers\Controller;
+use App\Models\Flat;
+use App\Models\FlatBilling;
 use Illuminate\Http\Request;
 
 class FlatBillingController extends Controller
@@ -21,7 +23,20 @@ class FlatBillingController extends Controller
      */
     public function create()
     {
-        return view('admin.flat-billing.create');
+        $flats = Flat::all();
+        return view('admin.flat-billing.create', compact('flats'));
+    }
+
+    public function getFlats(Request $request)
+    {
+
+        $flat = Flat::find($request->id);
+        $previousBills = FlatBilling::select('current_month_unit', 'date')
+            ->where('flat_name', $flat->flat_name)
+            ->orderBy('date', 'DESC')
+            ->get();
+
+        return response(['flat' => $flat, 'previous_bill' => $previousBills]);
     }
 
     /**

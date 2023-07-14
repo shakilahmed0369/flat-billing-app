@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\FlatBillingController;
 use App\Http\Controllers\Admin\FlatController;
 use App\Http\Controllers\ProfileController;
+use App\Models\FlatBilling;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,5 +38,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], fu
     Route::resource('flat', FlatController::class);
 
     // flat billing routes
+    Route::post('get-flats', [FlatBillingController::class, 'getFlats'])->name('get-flats');
     Route::resource('flat-billings', FlatBillingController::class);
+
 });
