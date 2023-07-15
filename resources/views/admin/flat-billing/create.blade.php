@@ -227,6 +227,8 @@
                         $('#maid_bill').val(response.flat.maid_bill);
                         $('#rubbish_bill').val(response.flat.rubbish_bill);
 
+                        $('#cal_flat_name').val(response.flat.flat_name);
+
                         response.previous_bill.forEach(unit => {
                             $('#previous_month_unit').append(
                                 `<option value='${unit.current_month_unit}'>${unit.current_month_unit} -> [${unit.date}]</option>`
@@ -241,6 +243,20 @@
 
             $('#unit_calculate_form').on('submit', function(e) {
                 e.preventDefault();
+
+                let form = $(this).serialize()
+
+                $.ajax({
+                    method: 'get',
+                    url: "{{ route('admin.estimate-unit') }}",
+                    data: form,
+                    success: function(response) {
+
+                    },
+                    error: function(response) {
+                        console.error(response);
+                    }
+                })
 
             })
         })

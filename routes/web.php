@@ -39,6 +39,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'as' => 'admin.'], fu
 
     // flat billing routes
     Route::post('get-flats', [FlatBillingController::class, 'getFlats'])->name('get-flats');
+    Route::get('estimate-unit', [FlatBillingController::class, 'CalculateEstimateUnit'])->name('estimate-unit');
     Route::resource('flat-billings', FlatBillingController::class);
 
 });

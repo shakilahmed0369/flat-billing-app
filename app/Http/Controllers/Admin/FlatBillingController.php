@@ -40,6 +40,27 @@ class FlatBillingController extends Controller
     }
 
     /**
+     * @param cal_flat_name
+     * @param cal_prev_unit
+     * @param cal_current_unit
+     * @param cal_extra_day
+     */
+
+    /**
+     * TODO: Have to work on validations
+     */
+
+    function CalculateEstimateUnit(Request $request)
+    {
+        $baseUnit = ($request->cal_current_unit - $request->cal_prev_unit);
+        $perDayUnit = ($baseUnit / (30 + $request->cal_extra_day));
+        $extraUnits = $perDayUnit * $request->cal_extra_day;
+        $estimateUnit = ($baseUnit - $extraUnits);
+
+        return $estimateUnit;
+    }
+
+    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
